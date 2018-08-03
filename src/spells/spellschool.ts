@@ -1,0 +1,13 @@
+export enum SpellSchool {
+	PHYSICAL,
+	FIRE,
+	FROST,
+	WIND,
+	EARTH,
+	LIGHT,
+	SHADOW,
+	NATURE,
+	WATER,
+	THUNDER,
+	GRAVITY,
+}
