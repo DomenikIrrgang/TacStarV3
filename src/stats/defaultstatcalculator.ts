@@ -1,5 +1,5 @@
 import { StatCalculator } from "./statcalculator";
-import { Unit } from "src/units/unit";
+import { Unit } from "../units/unit";
 import { Stat } from "./stat";
 import { SpellSchool } from "../spells/spellschool";
 

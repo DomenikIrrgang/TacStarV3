@@ -16,7 +16,7 @@ export enum Stat {
 	INTELLECT = "INTELLECT",
 
 	/**
-	 * Increases the esistance to all spell schools by 1 and increases health by 10.
+	 * Increases the resistance to all spell schools by 1 and increases health by 10.
 	 */
 	STAMINA = "STAMINA",
 
@@ -41,7 +41,7 @@ export enum Stat {
 	GRAVITY_RESISTANCE = "GRAVITY_RESISTANCE",
 
 	/**
-	 * Increases the chance to dodge an ability. Some abilities can not be dodge tho.
+	 * Increases the chance to dodge an ability. Some abilities can not be dodged tho.
 	 */
 	DODGE = "DODGE",
 

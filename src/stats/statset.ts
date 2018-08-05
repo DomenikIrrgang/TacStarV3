@@ -19,6 +19,14 @@ export class StatSet {
 		return this.set;
 	}
 
+	public addStatSet(statset: StatSet): StatSet {
+		const tmp = new StatSet(this.set);
+		for (const stat of Object.keys(Stat)) {
+			tmp.set[stat] = tmp.set[stat] + statset.set[stat];
+		}
+		return tmp;
+	}
+
 	public setStat(stat: Stat, value: number) {
 		this.set[stat] = value;
 	}

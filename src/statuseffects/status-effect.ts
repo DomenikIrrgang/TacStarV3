@@ -1,6 +1,14 @@
 import { Unit } from "../units/unit";
 import { Combat } from "../combat/combat";
+import { Eventbus } from "../eventbus/eventbus";
+import { Event } from "../eventbus/event";
+import { StatusEffectType } from "./status-effect-type";
 
+/**
+ * A status effect can only be applied to a unit. A status effect has full access to all functionalties of 
+ * the combat and its units. It gets notified when it is applied, removed, dispelled, expired or a turn ended.
+ * To take actions on this events simply override the appropiate method.
+ */
 export abstract class StatusEffect {
 
 	protected dispellable: boolean;
@@ -9,7 +17,32 @@ export abstract class StatusEffect {
 	protected name: string;
 	protected description: string;
 	protected source: Unit;
-    protected combat: Combat;
+	protected target: Unit;
+	protected combat: Combat;
+	protected visible: boolean;
+	protected type: StatusEffectType;
+	private static counter = 1;
+	private id: number;
+	
+	/**
+	 * Initilizes a new status effect.
+	 * 
+	 * @param name Name of the status effect.
+	 * @param description Description of the status effect.
+	 * @param maximumDuration Maximum duration of the status effect.
+	 * @param dispellable If true, status effect can be removed by abilities.
+	 * @param visible If true, will be shown to the user in the user interface.
+	 */
+	constructor(name: string, description: string, statusEffectType: StatusEffectType, maximumDuration: number, dispellable: boolean, visible: boolean) {
+		this.name = name;
+		this.description = description;
+		this.maximumDuration = maximumDuration;
+		this.remainingDuration = this.maximumDuration;
+		this.dispellable = dispellable;
+		this.visible = visible;
+		this.type = statusEffectType;
+		this.id = StatusEffect.counter++;
+	}
 
 	/**
 	 * Is invoked if the StatusEffect is applied to a Unit.
@@ -18,36 +51,45 @@ export abstract class StatusEffect {
 	 * @param source Unit that applied the StatusEffect.
 	 * @param target Unit the StatusEffect has been applied on.
 	 */
-	abstract onApply(combat: Combat, source: Unit, target: Unit): void;
+	public onApply(combat: Combat, source: Unit, target: Unit): void {
+		this.source = source;
+		this.target = target;
+		this.combat = combat;
+		this.combat.getEventbus().dispatchEvent(Event.STATUS_EFFECT_APPLIED, this);
+	}
 	
 	/**
 	 * Is invoked if the StatusEffect regularly faded.
 	 * 
-	 * @param target The Unit the StatusEffect faded on.
 	 */
-	abstract onExpire(target: Unit): void;
+	public onExpire(): void {
+		this.combat.getEventbus().dispatchEvent(Event.STATUS_EFFECT_EXPIRED, this);
+	}
 	
 	/**
 	 * Is invoked if the StatusEffect is removed before it expires.
 	 * 
-	 * @param target The Unit the StatusEffect was removed from.
 	 */
-	abstract onRemove(target: Unit): void;
+	public onRemove(): void {
+		this.combat.getEventbus().dispatchEvent(Event.STATUS_EFFECT_REMOVED, this)
+	}
 	
 	/**
 	 * Is invoked if the StatusEffect is dispelled.
 	 * 
-	 * @param source The Unit that dispelled the StatusEffect.
-	 * @param target The Unit the StatusEffect was dispelled on.
+	 * @param dispeller The Unit that dispelled the StatusEffect.
 	 */
-	abstract onDispell(source: Unit, target: Unit): void;
+	public onDispell(dispeller: Unit): void {
+		this.combat.getEventbus().dispatchEvent(Event.STATUS_EFFECT_DISPELLED, this, dispeller);
+	}
 	
 	/**
 	 * Is invoked if the StatusEffect lasted on turn.
 	 * 
-	 * @param target The Unit the StatusEffect lasted on.
 	 */
-	abstract onTurnOver(target: Unit): void;
+	public onTurnOver(): void {
+		this.remainingDuration -= this.combat.getCombatRules().getTurnSpeed();
+	}
 	
 	/**
 	 * Returns TRUE if StatusEffect is dispellable.
@@ -65,6 +107,19 @@ export abstract class StatusEffect {
 	 */
 	public getRemainingDuration(): number {
 		return this.remainingDuration;
+	}
+
+	/**
+	 * Changes the remaining duration of a status effect. If the new duration exeeds the maximum
+	 * duration, the remaining duration is set to the maximum.
+	 * 
+	 * @param newDuration New remaining duration of the status effect.
+	 */
+	public setRemainingDuration(newDuration: number): void {
+		if (newDuration > this.maximumDuration) {
+			newDuration = this.maximumDuration;
+		}
+		this.remainingDuration = newDuration;
 	}
 	
 	/**
@@ -92,5 +147,23 @@ export abstract class StatusEffect {
 	 */
 	public getDescription(): string {
 		return this.description;
+	}
+
+	/**
+	 * Returns true if status effect should be visible to the user.
+	 * 
+	 * @return True if status effect should be visible to the user.
+	 */
+	public isVisible(): boolean {
+		return this.visible;
+	}
+
+	/**
+	 * The id uniquely identifies a status effect.
+	 * 
+	 * @return Id of the StatusEffect.
+	 */
+	public getId(): number {
+		return this.id;
 	}
 }
