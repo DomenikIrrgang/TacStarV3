@@ -1,5 +1,5 @@
 import { Stat } from "./stat";
-import { SpellSchool } from "../spells/spellschool";
+import { SpellSchool } from "../abilities/spellschool";
 
 
 export class StatSet {

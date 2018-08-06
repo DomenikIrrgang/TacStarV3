@@ -1,6 +1,8 @@
 import { StatSet } from "../stats/statset";
 import { StatusEffect } from "../statuseffects/status-effect";
 import { Combat } from "../combat/combat";
+import { StatCalculator } from "../stats/statcalculator";
+import { DefaultStatCalculator } from "../stats/defaultstatcalculator";
 
 export class Unit {
 	private level: number;
@@ -9,12 +11,22 @@ export class Unit {
 	private gearStats: StatSet;
 	private statusEffects: StatusEffect[] = [];
 	private currentCombat: Combat;
+	private statCalculator: StatCalculator;
 
 	constructor(level?: number, baseStats?: StatSet) {
 		this.level = level || 1;
 		this.baseStats = baseStats || StatSet.forLevel(this.level);
 		this.statusEffectStats = new StatSet();
 		this.gearStats = new StatSet();
+		this.statCalculator = new DefaultStatCalculator();
+	}
+
+	public getStatCalculator(): StatCalculator {
+		return this.statCalculator;
+	}
+	
+	public setStatCalculator(statcalculator: StatCalculator): void {
+		this.statCalculator = statcalculator;
 	}
 
 	public getBaseStats(): StatSet {

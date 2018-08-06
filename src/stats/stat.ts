@@ -104,4 +104,8 @@ export enum Stat {
 	 * Increases the effect of critical strikes.
 	 */
 	CRITICAL_EFFECT = "CRITICAL_EFFECT",
+
+	RAGE = "RAGE",
+	ENERGY = "ENERGY",
+	MANA = "MANA",
 }
