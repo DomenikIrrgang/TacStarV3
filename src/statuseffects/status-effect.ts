@@ -55,7 +55,7 @@ export abstract class StatusEffect {
 		this.source = source;
 		this.target = target;
 		this.combat = combat;
-		this.combat.getEventbus().dispatchEvent(Event.STATUS_EFFECT_APPLIED, this);
+		Eventbus.getInstance().dispatchEvent(Event.STATUS_EFFECT_APPLIED, this);
 	}
 	
 	/**
@@ -63,7 +63,7 @@ export abstract class StatusEffect {
 	 * 
 	 */
 	public onExpire(): void {
-		this.combat.getEventbus().dispatchEvent(Event.STATUS_EFFECT_EXPIRED, this);
+		Eventbus.getInstance().dispatchEvent(Event.STATUS_EFFECT_EXPIRED, this);
 	}
 	
 	/**
@@ -71,7 +71,7 @@ export abstract class StatusEffect {
 	 * 
 	 */
 	public onRemove(): void {
-		this.combat.getEventbus().dispatchEvent(Event.STATUS_EFFECT_REMOVED, this)
+		Eventbus.getInstance().dispatchEvent(Event.STATUS_EFFECT_REMOVED, this)
 	}
 	
 	/**
@@ -80,7 +80,7 @@ export abstract class StatusEffect {
 	 * @param dispeller The Unit that dispelled the StatusEffect.
 	 */
 	public onDispell(dispeller: Unit): void {
-		this.combat.getEventbus().dispatchEvent(Event.STATUS_EFFECT_DISPELLED, this, dispeller);
+		Eventbus.getInstance().dispatchEvent(Event.STATUS_EFFECT_DISPELLED, this, dispeller);
 	}
 	
 	/**

@@ -7,8 +7,6 @@ export class Health extends Resource {
 	constructor(unit: Unit) {
 		super(unit, 100, 100);
 	}
-
-	public turnOver() {}
 	
 	public getAddedMaximumValue(): number {
 		return this.unit.getStatCalculator().getTotalHealth(this.unit);

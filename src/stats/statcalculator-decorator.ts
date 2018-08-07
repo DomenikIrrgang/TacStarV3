@@ -1,6 +1,6 @@
 import { StatCalculator } from "./statcalculator";
 import { Unit } from "../units/unit";
-import { SpellSchool } from "../spells/spellschool";
+import { SpellSchool } from "../abilities/spellschool";
 
 export class StatCalculatorDecorator implements StatCalculator {
 

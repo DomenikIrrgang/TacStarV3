@@ -1,5 +1,5 @@
 import { Unit } from "../units/unit";
-import { SpellSchool } from "../spells/spellschool";
+import { SpellSchool } from "../abilities/spellschool";
 
 export interface StatCalculator {
 	getTotalHealth(unit: Unit): number;

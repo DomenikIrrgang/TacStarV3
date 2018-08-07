@@ -1,7 +1,7 @@
 import { StatCalculator } from "./statcalculator";
 import { Unit } from "../units/unit";
 import { Stat } from "./stat";
-import { SpellSchool } from "../spells/spellschool";
+import { SpellSchool } from "../abilities/spellschool";
 
 export class DefaultStatCalculator implements StatCalculator {
 	

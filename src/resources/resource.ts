@@ -1,4 +1,3 @@
-import { StatSet } from "../stats/statset";
 import { Unit } from "../units/unit";
 import { ResourceType } from "./resource-type";
 
@@ -6,13 +5,13 @@ export abstract class Resource {
 
 	protected baseMaxiumumValue: number;
 	protected currentValue: number;
-	protected unit: Unit;
+    protected unit: Unit;
 
 	constructor(unit: Unit, currentValue: number, baseMaxiumumValue: number) {
 		this.unit = unit;
 		this.baseMaxiumumValue = baseMaxiumumValue;
 		this.setCurrentValue(currentValue);
-	}
+    }
 
     /**
      * Returns currentValue as percentage.
@@ -74,12 +73,6 @@ export abstract class Resource {
 	public getMaximumValue(): number {
 		return this.baseMaxiumumValue + this.getAddedMaximumValue();
 	}
-
-    /**
-     * Is invoked if one turn is over.
-     *
-     */
-	public abstract turnOver();
 
 	/**
      * Returns the value that will be added to the base maximum.
