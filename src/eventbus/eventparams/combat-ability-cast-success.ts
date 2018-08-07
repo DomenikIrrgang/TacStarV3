@@ -9,6 +9,6 @@ export interface CombatAbilityCastSuccess {
 	critical: boolean;
 	reflected: boolean;
 	blocked: boolean;
-	blockedAmount: boolean;
+	blockedAmount: number;
 	resisted: number;
 }

@@ -42,6 +42,7 @@ export abstract class StatusEffect {
 		this.visible = visible;
 		this.type = statusEffectType;
 		this.id = StatusEffect.counter++;
+		Eventbus.getInstance().addEventCallback(Event.COMBAT_TURN_OVER, this.onTurnOver.bind(this));
 	}
 
 	/**
@@ -87,8 +88,8 @@ export abstract class StatusEffect {
 	 * Is invoked if the StatusEffect lasted on turn.
 	 * 
 	 */
-	public onTurnOver(): void {
-		this.remainingDuration -= this.combat.getCombatRules().getTurnSpeed();
+	public onTurnOver(combat: Combat): void {
+		this.remainingDuration -= combat.getCombatRules().getTurnSpeed();
 	}
 	
 	/**

@@ -9,13 +9,13 @@ export class Energy extends Resource {
 
 	constructor(unit: Unit) {
 		super(unit, 100, 100);
-		Eventbus.getInstance().addEventCallback(Event.COMBAT_TURN_OVER, this.onTurnOver);
+		Eventbus.getInstance().addEventCallback(Event.COMBAT_TURN_OVER, this.onTurnOver.bind(this));
 	}
 
 	private onTurnOver(): void {
 		const baseEnergy = 5;
 		const extraEnergy = this.unit.getStatCalculator().getTotalHaste(this.unit) / 100;
-		this.increaseCurrentValue(baseEnergy + extraEnergy)
+		this.increaseCurrentValue(baseEnergy + extraEnergy);
 	}
 
 	public getAddedMaximumValue(): number {

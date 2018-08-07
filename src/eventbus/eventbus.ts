@@ -18,11 +18,11 @@ export class Eventbus {
 	public dispatchEvent(event: Event, ...args: any[]): void {
 		for (const listener of this.listeners) {
 			if (listener.getEvents().find(element => element === event) !== -1) {
-				listener.onEvent(event, args);
+				listener.onEvent(event, ...args);
 			}
 		}
 		for (const callback of this.eventCallbacks[event]) {
-			callback(args);
+			callback(...args);
 		}
 	}
 

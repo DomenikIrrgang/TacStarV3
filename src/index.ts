@@ -10,7 +10,5 @@ let statset = new StatSet({
 
 let unit = new Unit(20);
 let combat = new Combat();
-
-for (let stat of Object.keys(Stat)) {
-	console.log(stat, unit.getBaseStats().getStat(<Stat> stat));
-}
+combat.startCombat();
+combat.endCombat();

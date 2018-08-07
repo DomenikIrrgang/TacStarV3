@@ -3,6 +3,8 @@ import { StatusEffect } from "../statuseffects/status-effect";
 import { Combat } from "../combat/combat";
 import { StatCalculator } from "../stats/statcalculator";
 import { DefaultStatCalculator } from "../stats/defaultstatcalculator";
+import { Eventbus } from "../eventbus/eventbus";
+import { Event } from "../eventbus/event";
 
 export class Unit {
 	private level: number;
@@ -19,6 +21,8 @@ export class Unit {
 		this.statusEffectStats = new StatSet();
 		this.gearStats = new StatSet();
 		this.statCalculator = new DefaultStatCalculator();
+		Eventbus.getInstance().addEventCallback(Event.COMBAT_START, this.combatStart.bind(this));
+		Eventbus.getInstance().addEventCallback(Event.COMBAT_END, this.combatEnd.bind(this));
 	}
 
 	public getStatCalculator(): StatCalculator {

@@ -3,14 +3,14 @@ import { ResourceType } from "./resource-type";
 
 export abstract class Resource {
 
-	protected baseMaxiumumValue: number;
-	protected currentValue: number;
+    protected baseMaxiumumValue: number;
+    protected currentValue: number;
     protected unit: Unit;
 
-	constructor(unit: Unit, currentValue: number, baseMaxiumumValue: number) {
-		this.unit = unit;
-		this.baseMaxiumumValue = baseMaxiumumValue;
-		this.setCurrentValue(currentValue);
+    constructor(unit: Unit, currentValue: number, baseMaxiumumValue: number) {
+        this.unit = unit;
+        this.baseMaxiumumValue = baseMaxiumumValue;
+        this.setCurrentValue(currentValue);
     }
 
     /**
@@ -19,8 +19,8 @@ export abstract class Resource {
      * @return Percentage.
      */
     public getPercentage(): number {
-		return this.currentValue / this.getMaximumValue();
-	}
+        return this.currentValue / this.getMaximumValue();
+    }
 
     /**
      * Sets the current Resource value to value.
@@ -28,8 +28,8 @@ export abstract class Resource {
      * @param newCurrentValue The new current Resource value.
      */
     public setCurrentValue(newCurrentValue: number): void {
-		this.currentValue = this.checkCurrentValue(newCurrentValue);
-	}
+        this.currentValue = this.checkCurrentValue(newCurrentValue);
+    }
 
     /**
      * Increases the current Resource value by value but not over the Resource
@@ -39,8 +39,8 @@ export abstract class Resource {
      * increased.
      */
     public increaseCurrentValue(value: number): void {
-		this.setCurrentValue(this.currentValue + value);
-	}
+        this.setCurrentValue(this.currentValue + value);
+    }
 
     /**
      * Sets the BaseMaxValue to value.
@@ -48,9 +48,9 @@ export abstract class Resource {
      * @param newBaseMaximumValue The new BaseMaxValue.
      */
     public setBaseMaxValue(newBaseMaximumValue: number): void {
-		this.baseMaxiumumValue = (this.baseMaxiumumValue + newBaseMaximumValue > 0) ? this.baseMaxiumumValue + newBaseMaximumValue : 0;
-		this.setCurrentValue(this.currentValue);
-	}
+        this.baseMaxiumumValue = (this.baseMaxiumumValue + newBaseMaximumValue > 0) ? this.baseMaxiumumValue + newBaseMaximumValue : 0;
+        this.setCurrentValue(this.currentValue);
+    }
 
     /**
      * Returns the BaseMaxValue.
@@ -58,8 +58,8 @@ export abstract class Resource {
      * @return The BaseMaxValue.
      */
     public getBaseMaxValue(): number {
-		return this.baseMaxiumumValue;
-	}
+        return this.baseMaxiumumValue;
+    }
 
     /**
      * Return the current Resource value.
@@ -67,28 +67,28 @@ export abstract class Resource {
      * @return The current Resource value.
      */
     public getCurrentValue(): number {
-		return this.currentValue;
-	}
+        return this.currentValue;
+    }
 
-	public getMaximumValue(): number {
-		return this.baseMaxiumumValue + this.getAddedMaximumValue();
-	}
+    public getMaximumValue(): number {
+        return this.baseMaxiumumValue + this.getAddedMaximumValue();
+    }
 
 	/**
      * Returns the value that will be added to the base maximum.
      *
      * @return The Resource cap.
      */
-	public abstract getAddedMaximumValue(): number;
+    public abstract getAddedMaximumValue(): number;
 
-	public abstract getType(): ResourceType;
-	
+    public abstract getType(): ResourceType;
+
 	/**
 	 * Changes the input value to a valid range.
 	 * 
 	 * @param value The new value for the currentvalue.
 	 */
-	protected checkCurrentValue(value: number): number {
+    protected checkCurrentValue(value: number): number {
         if (value < 0) {
             return 0;
         }

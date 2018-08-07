@@ -10,7 +10,7 @@ export class Rage extends Resource {
 
 	constructor(unit: Unit) {
 		super(unit, 100, 100);
-		Eventbus.getInstance().addEventCallback(Event.COMBAT_ABILITY_CAST_SUCCESS, this.onAbilityCastSuccess);
+		Eventbus.getInstance().addEventCallback(Event.COMBAT_ABILITY_CAST_SUCCESS, this.onAbilityCastSuccess.bind(this));
 	}
 
 	private onAbilityCastSuccess(event: CombatAbilityCastSuccess) {
