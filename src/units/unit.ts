@@ -14,6 +14,8 @@ export class Unit {
 	private statusEffects: StatusEffect[] = [];
 	private currentCombat: Combat;
 	private statCalculator: StatCalculator;
+	private static counter = 0;
+	private id: number;
 
 	constructor(level?: number, baseStats?: StatSet) {
 		this.level = level || 1;
@@ -21,8 +23,14 @@ export class Unit {
 		this.statusEffectStats = new StatSet();
 		this.gearStats = new StatSet();
 		this.statCalculator = new DefaultStatCalculator();
+		this.id = Unit.counter;
+		Unit.counter++;
 		Eventbus.getInstance().addEventCallback(Event.COMBAT_START, this.combatStart.bind(this));
 		Eventbus.getInstance().addEventCallback(Event.COMBAT_END, this.combatEnd.bind(this));
+	}
+
+	public getId(): number {
+		return this.id;
 	}
 
 	public getStatCalculator(): StatCalculator {

@@ -11,7 +11,7 @@ export abstract class Ability {
 	private remainingCooldown = 0;
 	private maximumCooldown: number;
 
-	public AbilityImpl(maximumCooldown: number) {
+	constructor(maximumCooldown: number) {
 		this.maximumCooldown = maximumCooldown;
 		Eventbus.getInstance().addEventCallback(Event.COMBAT_TURN_OVER, this.onTurnOver.bind(this));
 	}
@@ -92,7 +92,7 @@ export abstract class Ability {
 	public abstract canCrit(): boolean;
 
 	public abstract canMiss(): boolean;
-	
+
 	/**
 	 * Returns the extra CritChance of this Ability.
 	 * 
@@ -126,9 +126,9 @@ export abstract class Ability {
 	 * Returns the value of this Ability based on its source.
 	 * 
 	 * @param source The source of this Ability.
-	 * @return
+	 * @return Damage value for unit before reduction.
 	 */
-	public abstract getAbilityValue(source: Unit): void;
+	public abstract getAbilityValue(source: Unit): number;
 
 	/**
 	 * Returns the name of this Ability.
